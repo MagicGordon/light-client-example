@@ -1,0 +1,37 @@
+
+
+Compile contract
+
+```shell
+make -C contract
+```
+
+Deploy contract
+```shell
+near create-account $NewAccounntName --useFaucet
+near deploy $NewAccounntName contract/res/contract.wasm
+```
+
+Generate parameters and call contracts
+```shell
+cargo run --manifest-path ./parameter_generator/Cargo.toml -- --tx-id <TX_ID> --confirmations <CONFIRMATIONS>
+```
+
+Example：
+```shell
+cargo run --manifest-path ./parameter_generator/Cargo.toml -- --tx-id 9a347854f9debb77f75790568de66608f6e3800fbed1c01656595925756aa1cc --confirmations 600
+```
+output:
+```shell
+tx_id: "9a347854f9debb77f75790568de66608f6e3800fbed1c01656595925756aa1cc"
+confirmations: 600
+tx_block_blockhash: "0000000000000c3f818b0b6374c609dd8e548a0a9e61065e942cd466c426e00d"
+tx_index: 554
+merkle_proof: ["edc43635a5dad5c2158ebc969d9e76f7d871fd930f120cd176a8cca90bf8c72c", "53559f59917fd1d9ee52720a8aa39e64c1c04738bd49d44cfc6cf3da3fc2f065", "06683636e725103d4203961b4eab5f6db5cd7b4828be2d6d0cc2affc96cc7661", "1be1ca713868f37aa7968f97e032a5594d5fa16336f26889e3a3a0c35dfcd557", "1791e141e20b68fc8c01094643869fe4e60d8f25cc3a69bdb9c325e49b2f83f3", "9d86aa3b5d1a969bb7fbc2aa3c73d5d9e55ed9cadbb5d80f7fc0205c3424a765", "43ba8907658c3f4cce10f3bca2838ebd73363c97057b37b38c96a4585e864465", "d112d56c239d6a184861c0ea510f8fd1970b94f3891e06fd41544311af61e250", "0a2918a7c0ef370034fb782fbb8294f655d22b35ee2d16ab3019fd49e4f0cef4", "f9b5c77c4dc7f5d733288e9528e68996165a41c14e1fc0cf33ddac1fc4c52c9d", "7ae32f95f3d7a5f32b288fb278bc383b1e38f0d0a447327f2ac128925ca701fb", "d277683feacdc692d84090ebd89c412a85773b240932c9b98c935ebf2d761b70"]
+
+Verify by directly calling the btc-client.testnet interface:
+near call btc-client.testnet verify_transaction_inclusion "zKFqdSVZWVYWwNG+D4Dj9ghm5o1WkFf3d7ve+VR4NJoN4CbEZtQslF4GYZ4KilSO3QnGdGMLi4E/DAAAAAAAACoCAAAAAAAADAAAACzH+AupzKh20QwSD5P9cdj3dp6dlryOFcLV2qU1NsTtZfDCP9rzbPxM1Em9OEfAwWSeo4oKclLu2dF/kVmfVVNhdsyW/K/CDG0tvihIe821bV+rThuWA0I9ECXnNjZoBlfV/F3DoKPjiWjyNmOhX01ZpTLgl4+Wp3rzaDhxyuEb84Mvm+Qlw7m9aTrMJY8N5uSfhkNGCQGM/GgL4kHhkRdlpyQ0XCDAfw/YtdvK2V7l2dVzPKrC+7eblhpdO6qGnWVEhl5YpJaMszd7BZc8NnO9joOivPMQzkw/jGUHibpDUOJhrxFDVEH9Bh6J85QLl9GPD1HqwGFIGGqdI2zVEtH0zvDkSf0ZMKsWLe41K9JV9pSCuy94+zQAN+/ApxgpCp0sxcQfrN0zz8AfTsFBWhaWieYolY4oM9f1x018x7X5+wGnXJIowSp/Mkek0PA4Hjs4vHiyjygr86XX85Uv43pwG3Ytv16TjLnJMgkkO3eFKkGc2OuQQNiSxs3qP2h30lgCAAAAAAAA" --base64 --accountId $YOUR_NEAR_ACCOUNT
+
+Verify through cross-contract calls to the btc-client.testnet interface.:
+near call use-light-client-example.testnet verify_transaction_inclusion '{"tx_id": "9a347854f9debb77f75790568de66608f6e3800fbed1c01656595925756aa1cc", "tx_block_blockhash":"0000000000000c3f818b0b6374c609dd8e548a0a9e61065e942cd466c426e00d", "tx_index":554, "merkle_proof":["edc43635a5dad5c2158ebc969d9e76f7d871fd930f120cd176a8cca90bf8c72c", "53559f59917fd1d9ee52720a8aa39e64c1c04738bd49d44cfc6cf3da3fc2f065", "06683636e725103d4203961b4eab5f6db5cd7b4828be2d6d0cc2affc96cc7661", "1be1ca713868f37aa7968f97e032a5594d5fa16336f26889e3a3a0c35dfcd557", "1791e141e20b68fc8c01094643869fe4e60d8f25cc3a69bdb9c325e49b2f83f3", "9d86aa3b5d1a969bb7fbc2aa3c73d5d9e55ed9cadbb5d80f7fc0205c3424a765", "43ba8907658c3f4cce10f3bca2838ebd73363c97057b37b38c96a4585e864465", "d112d56c239d6a184861c0ea510f8fd1970b94f3891e06fd41544311af61e250", "0a2918a7c0ef370034fb782fbb8294f655d22b35ee2d16ab3019fd49e4f0cef4", "f9b5c77c4dc7f5d733288e9528e68996165a41c14e1fc0cf33ddac1fc4c52c9d", "7ae32f95f3d7a5f32b288fb278bc383b1e38f0d0a447327f2ac128925ca701fb", "d277683feacdc692d84090ebd89c412a85773b240932c9b98c935ebf2d761b70"], "confirmations":600}' --accountId $YOUR_NEAR_ACCOUNT
+```

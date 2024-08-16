@@ -1,0 +1,10 @@
+#IDE
+.idea
+
+target
+neardev
+
+# OS X
+.DS_Store
+.vscode
+res

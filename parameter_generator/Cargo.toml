@@ -1,0 +1,16 @@
+[package]
+name = "parameter-generator"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "4.5.16", features = ["derive"] }
+reqwest = { version = "0.11.27", features = ["json"] }
+tokio = { version = "1.37.0", features = ["full"] }
+bitcoin = "0.32.0"
+serde_json = "1.0.116"
+hex = "0.4"
+sha2 = "0.10"
+borsh = { version = "1.5.0", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+base64 = "0.21"
